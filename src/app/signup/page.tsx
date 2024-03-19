@@ -1,30 +1,69 @@
-import React, { useState } from 'react';
-import Header from '../_components/Header';
+import React, { useState } from "react";
+import Header from "../_components/Header";
+import Link from "next/link";
 
 const LoginPage = () => {
   return (
-    <div className='h-screen flex flex-col'>
+    <div className="flex h-screen flex-col">
       <Header />
-      <div className='flex justify-center mt-14'>
-        <div className="px-8 pb-24 pt-8 rounded-2xl border border-gray-300 w-1/3">
-          <h2 className="text-2xl font-semibold mb-4 text-center">Create your account</h2>
+      <div className="mt-14 flex justify-center">
+        <div className="w-1/3 rounded-2xl border border-gray-300 px-8 pb-24 pt-8">
+          <h2 className="mb-4 text-center text-2xl font-semibold">
+            Create your account
+          </h2>
           <form>
             <div className="mb-4">
-              <label htmlFor="name" className="text-gray-700 text-xs mb-2">Name</label>
-              <input placeholder='Enter' type="text" id="username" name="username" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black" />
+              <label htmlFor="name" className="mb-2 text-xs text-gray-700">
+                Name
+              </label>
+              <input
+                placeholder="Enter"
+                type="text"
+                id="username"
+                name="username"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-black focus:outline-none"
+              />
             </div>
             <div className="mb-4">
-              <label htmlFor="Email" className="text-gray-700 text-xs mb-2">Email</label>
-              <input placeholder='Enter' type="text" id="username" name="username" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black" />
+              <label htmlFor="Email" className="mb-2 text-xs text-gray-700">
+                Email
+              </label>
+              <input
+                placeholder="Enter"
+                type="text"
+                id="username"
+                name="username"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-black focus:outline-none"
+              />
             </div>
-            <div className="mb-4 relative">
-              <label htmlFor="password" className="text-gray-700 text-xs mb-2">Password</label>
-              <input placeholder='Enter' type= 'password' id="password" name="password" className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-black" />
+            <div className="relative mb-4">
+              <label htmlFor="password" className="mb-2 text-xs text-gray-700">
+                Password
+              </label>
+              <input
+                placeholder="Enter"
+                type="password"
+                id="password"
+                name="password"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-black focus:outline-none"
+              />
             </div>
-            <button type="submit" className="w-full bg-black text-white text-xs py-4 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700">CREATE ACCOUNT</button>
+            <button
+              type="submit"
+              className="w-full rounded-md bg-black px-4 py-4 text-xs text-white hover:bg-gray-700 focus:bg-gray-700 focus:outline-none"
+            >
+              CREATE ACCOUNT
+            </button>
           </form>
-          <div className="text-center mt-4 font-light">
-            <p className='text-xs'>HAVE AN ACCOUNT? <a href="#" className=" ml-2 text-black font-semibold hover:text-gray-700">LOGIN</a></p>
+          <div className="mt-4 text-center font-light">
+            <p className="text-xs">
+              HAVE AN ACCOUNT?{" "}
+              <Link href={'/login'}
+                className=" ml-2 font-semibold text-black hover:text-gray-700"
+              >
+                LOGIN
+              </Link>
+            </p>
           </div>
         </div>
       </div>
