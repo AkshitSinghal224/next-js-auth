@@ -2,7 +2,7 @@
 import React, { useState, useRef } from "react";
 import Header from "../_components/Header";
 
-const LoginPage: React.FC = () => {
+const VerifyPage: React.FC = () => {
   const [verificationCode, setVerificationCode] = useState<string[]>(
     Array.from({ length: 8 }, () => ""),
   );
@@ -74,4 +74,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default VerifyPage;
