@@ -24,9 +24,14 @@ const VerifyPage: React.FC = () => {
         return newCode;
       });
 
-      if (value && index < inputRefs.current.length - 1) {
-        inputRefs.current[index + 1].focus();
+      if (
+        value &&
+        index < inputRefs.current.length - 1 &&
+        inputRefs.current[index + 1] !== undefined
+      ) {
+        inputRefs.current[index + 1]!.focus();
       }
+
     }
   };
 
