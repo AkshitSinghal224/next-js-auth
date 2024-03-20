@@ -1,17 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import Header from "../_components/Header";
 import Link from "next/link";
-import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
 
-const SignUpPage = () => {
-  const [formData, setFormData] = useState({
+interface FormData {
+  username: string;
+  email: string;
+  password: string;
+}
+
+const SignUpPage: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
     username: "",
     email: "",
     password: "",
   });
 
-  const handleChange = (e : any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -19,22 +25,11 @@ const SignUpPage = () => {
     }));
   };
 
-  const handleSubmit = async (e : any) => {
-    e.preventDefault();
-    try {
-      // Call the addUser API here using formData
-      console.log(formData);
-      await api.user.addUser(
-        formData.username,
-        formData.email,
-        formData.password,
-      );
+  const router = useRouter();
 
-      // Redirect or show success message after successful user creation
-    } catch (error) {
-      console.error("Error creating user:", error);
-      // Handle error (e.g., show error message)
-    }
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    console.log("Verification Code:", formData); //send data to backend
+    router.push("/verify");
   };
 
   return (
@@ -88,12 +83,19 @@ const SignUpPage = () => {
                 className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-black focus:outline-none"
               />
             </div>
+            <Link
+                href={"/verify"}
+                className=" ml-2 font-semibold text-black hover:text-gray-700"
+              >
+
             <button
               type="submit"
               className="w-full rounded-md bg-black px-4 py-4 text-xs text-white hover:bg-gray-700 focus:bg-gray-700 focus:outline-none"
             >
               CREATE ACCOUNT
             </button>
+              </Link>
+            
           </form>
           <div className="mt-4 text-center font-light">
             <p className="text-xs">

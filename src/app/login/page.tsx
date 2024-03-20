@@ -1,14 +1,30 @@
 "use client";
-
-import React, { useState } from "react";
-import Header from "../_components/Header";
+import React, { useState, FormEvent } from "react";
 import Link from "next/link";
+import Header from "../_components/Header";
+import { useRouter } from "next/navigation";
 
-const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
+interface LoginPageProps {}
+
+const LoginPage: React.FC<LoginPageProps> = () => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const router = useRouter();
+
+  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData: { email: string; password: string } = {
+      email: (event.target as HTMLFormElement).username.value,
+      password: (event.target as HTMLFormElement).password.value,
+    };
+
+    console.log("Form data:", formData); //send data to backend
+    router.push("/interest");
   };
 
   return (
@@ -24,7 +40,7 @@ const LoginPage = () => {
             </h2>
           </div>
 
-          <form>
+          <form onSubmit={handleLogin}>
             <div className="mb-4">
               <label htmlFor="Email" className="mb-2 text-xs text-gray-700">
                 Email
@@ -58,6 +74,7 @@ const LoginPage = () => {
             </div>
 
             <button
+              
               type="submit"
               className="w-full rounded-md bg-black px-4 py-4 text-xs text-white hover:bg-gray-700 focus:bg-gray-700 focus:outline-none"
             >
@@ -70,9 +87,11 @@ const LoginPage = () => {
           <div className="mt-4 text-center font-light">
             <p className="text-xs">
               Don't have an Account?{" "}
-              <Link href="/signup"
-                className="ml-2 font-semibold text-black hover:text-gray-700">
-                  SIGN UP
+              <Link
+                href="/signup"
+                className="ml-2 font-semibold text-black hover:text-gray-700"
+              >
+                SIGN UP
               </Link>
             </p>
           </div>

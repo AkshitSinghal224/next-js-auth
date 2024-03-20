@@ -1,25 +1,44 @@
-"use client";
+'use client'
 import React, { useState } from "react";
 
-const CheckBox = ({ fetchedInterests }) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const interestsPerPage = 6;
-  const maxPagesToShow = 7;
+interface Interest {
+  id: number;
+  name: string;
+}
+
+interface CheckBoxProps {
+  fetchedInterests: Interest[];
+}
+
+const CheckBox: React.FC<CheckBoxProps> = ({ fetchedInterests }) => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [ticked, setTicked] = useState<number[]>([]);
+  const interestsPerPage: number = 6;
+  const maxPagesToShow: number = 7;
+
+  const handleCheckboxChange = (id: number) => {
+    if (ticked.includes(id)) {
+      setTicked(ticked.filter((t) => t !== id)); 
+    } else {
+      setTicked([...ticked, id]); 
+    }
+    console.log(ticked); //send data to backend
+  };
 
   // Calculate total pages
-  const totalPages = Math.ceil(fetchedInterests.length / interestsPerPage);
+  const totalPages: number = Math.ceil(
+    fetchedInterests.length / interestsPerPage,
+  );
 
-  const indexOfLastInterest = currentPage * interestsPerPage;
-  const indexOfFirstInterest = indexOfLastInterest - interestsPerPage;
-  const currentInterests = fetchedInterests.slice(
+  const indexOfLastInterest: number = currentPage * interestsPerPage;
+  const indexOfFirstInterest: number = indexOfLastInterest - interestsPerPage;
+  const currentInterests: Interest[] = fetchedInterests.slice(
     indexOfFirstInterest,
     indexOfLastInterest,
   );
 
-  // Function to handle pagination
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  // Function to handle previous page
   const goToPreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -36,8 +55,11 @@ const CheckBox = ({ fetchedInterests }) => {
     setCurrentPage(1);
   };
 
-  let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
-  let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
+  let startPage: number = Math.max(
+    1,
+    currentPage - Math.floor(maxPagesToShow / 2),
+  );
+  let endPage: number = Math.min(startPage + maxPagesToShow - 1, totalPages);
 
   if (endPage - startPage < maxPagesToShow - 1) {
     startPage = Math.max(1, endPage - maxPagesToShow + 1);
@@ -68,6 +90,8 @@ const CheckBox = ({ fetchedInterests }) => {
               className="mr-3 h-4 w-4 cursor-pointer rounded accent-black"
               type="checkbox"
               id={interest.id.toString()}
+              checked={ticked.includes(interest.id)} 
+              onChange={() => handleCheckboxChange(interest.id)} 
             />
             <label
               className=" cursor-pointer text-sm font-light "

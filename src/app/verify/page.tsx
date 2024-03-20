@@ -1,6 +1,8 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, ChangeEvent } from "react";
 import Header from "../_components/Header";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const VerifyPage: React.FC = () => {
   const [verificationCode, setVerificationCode] = useState<string[]>(
@@ -10,10 +12,9 @@ const VerifyPage: React.FC = () => {
     Array.from({ length: 8 }, () => document.createElement("input")),
   );
 
-  // Function to handle changes in input fields
   const handleChange = (
     index: number,
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: ChangeEvent<HTMLInputElement>,
   ) => {
     const value = event.target.value;
     if (value.length <= 1) {
@@ -22,11 +23,18 @@ const VerifyPage: React.FC = () => {
         newCode[index] = value;
         return newCode;
       });
-      // Move focus to the next input field if a digit is entered
+
       if (value && index < inputRefs.current.length - 1) {
         inputRefs.current[index + 1].focus();
       }
     }
+  };
+
+  const router = useRouter();
+
+  const handleSubmit = () => {
+    console.log("Verification Code:", verificationCode); //send data to backend
+    router.push("/login");
   };
 
   return (
@@ -42,7 +50,7 @@ const VerifyPage: React.FC = () => {
             <h2 className="mb-5 text-xs font-semibold">swa***@gmail.com</h2>{" "}
             {/*  email */}
           </div>
-          <form>
+          <form onSubmit={handleSubmit}>
             <label htmlFor="name" className="mb-2 text-gray-700">
               Code
             </label>
@@ -62,7 +70,7 @@ const VerifyPage: React.FC = () => {
               ))}
             </div>
             <button
-              type="submit"
+              type="button"
               className="w-full rounded-md bg-black px-4 py-4 text-xs text-white hover:bg-gray-700 focus:bg-gray-700 focus:outline-none"
             >
               VERIFY
