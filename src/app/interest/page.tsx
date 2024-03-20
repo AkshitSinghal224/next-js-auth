@@ -4,7 +4,6 @@ import { api } from "~/trpc/server";
 import CheckBox from "../_components/CheckBox";
 
 const InterestPage = async () => {
-
   const fetchedInterests = await api.category.getAll();
   
   return (
